@@ -1,0 +1,22 @@
+FROM node:20.15.0-alpine
+
+## Goes to the app directory (like cd cmd)
+WORKDIR /app
+
+## Copy package.json and package-lock.json to the app directory 
+COPY package*.json ./
+
+## Install app dependencies
+RUN npm install
+
+## Copy the rest of our app into the container
+COPY . .
+
+## Set port env variable
+ENV PORT=3001
+
+## Expose the port so our computer can access it
+EXPOSE 3001
+
+## Run the app
+CMD ["npm", "start"]
