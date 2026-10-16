@@ -15,7 +15,7 @@ COPY . .
 ## Set port env variable
 ENV PORT=3001
 
-## Expose the port so our computer can access it
+## Expose the port
 EXPOSE 3001
 
 ## Run the app
