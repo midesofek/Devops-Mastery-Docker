@@ -1,0 +1,19 @@
+services:
+  web:
+    image: nginx
+    container_name: dolfined
+    ports:
+      - "8080:80"
+    volumes:
+      - /home/ubuntu/host-folder/:usr/share/nginx/html
+
+  frontend:
+    container_name: dolfined2
+    ports:
+      - "4000:80"
+    image: nginx
+    volumes:
+      - new-vol:/usr/share/nginx/html
+
+volumes:
+  new-vol:
