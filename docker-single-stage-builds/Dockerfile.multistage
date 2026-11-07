@@ -1,0 +1,9 @@
+FROM alpine:latest AS builder
+RUN apk --no-cache add curl busybox-extras
+RUN curl -o index.html http://example.com
+
+FROM busybox
+WORKDIR /usr/share/web
+COPY --from=builder index.html .
+EXPOSE 81
+CMD ["httpd", "-f", "-p", "81"]
