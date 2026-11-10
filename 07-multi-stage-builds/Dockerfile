@@ -1,20 +1,35 @@
-## Stage 1
-FROM python:3.9-slim AS builder
+# Stage 1 - Build and install dependencies
+
+FROM python:3.10-slim AS builder
 
 WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
+RUN pip install -r requirements.txt
+
+COPY app.py .
 
 
-## Stage 2
-FROM python:3.9-slim
+
+# Stage 2 - Runtime environment
+
+FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY --from=builder /install /usr/local
 
-COPY . .
+
+# Copy installed packages and app
+
+COPY --from=builder /usr/local /usr/local
+
+COPY --from=builder /app /app
+
+
+
+EXPOSE 5000
 
 CMD ["python", "app.py"]
+
+
